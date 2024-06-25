@@ -1,34 +1,33 @@
-object MovieTheater {
-
-  // Function to calculate the number of attendees based on ticket price
-  def attendees(price: Double): Int = {
-    (120 + (15 - price) / 5 * 20).toInt
+object TicketCalculator {
+  def attendees(price: Int): Int = {
+    120 + (15 - price) / 5 * 20
   }
 
-  // Function to calculate revenue based on ticket price
-  def revenue(price: Double): Double = {
+  def revenue(price: Int): Int = {
     attendees(price) * price
   }
 
-  // Function to calculate cost based on ticket price
-  def cost(price: Double): Double = {
-    500 + 3 * attendees(price)
+  def cost(attendees: Int): Int = {
+    500 + 3 * attendees
   }
 
-  // Function to calculate profit based on ticket price
-  def profit(price: Double): Double = {
-    revenue(price) - cost(price)
+  def profit(price: Int): Int = {
+    revenue(price) - cost(attendees(price))
   }
 
   def main(args: Array[String]): Unit = {
-    // Calculate and print profits for different ticket prices
-    println(s"Profit at price 5: ${profit(5)}")
-    println(s"Profit at price 10: ${profit(10)}")
-    println(s"Profit at price 15: ${profit(15)}")
-    println(s"Profit at price 20: ${profit(20)}")
-    println(s"Profit at price 25: ${profit(25)}")
-    println(s"Profit at price 30: ${profit(30)}")
-    println(s"Profit at price 35: ${profit(35)}")
-    println(s"Profit at price 40: ${profit(40)}")
+    var bestPrice = 0
+    var maxProfit = Int.MinValue
+
+    for (price <- 5 to 50 by 5) {
+      val currentProfit = profit(price)
+      println(s"Price: Rs $price, Profit: Rs $currentProfit")
+      if (currentProfit > maxProfit) {
+        maxProfit = currentProfit
+        bestPrice = price
+      }
+    }
+
+    println(s"The best ticket price is Rs $bestPrice with a profit of Rs $maxProfit")
   }
 }
